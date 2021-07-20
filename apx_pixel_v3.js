@@ -1,3 +1,4 @@
+var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
     console.log('APX_PIXEL_LOADED');
 
@@ -16,13 +17,6 @@ if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
         apx.external_api('InitiateCheckout',oObj);
         //console.log(oObj);
     }
-
-    // window.dooca.trackers.fb.checkoutPayment = function(oObj){
-    //     console.log('[APX-Pixel] Event - checkoutPayment');
-    //     apx.external_api('checkoutPayment',oObj);
-    //     //console.log(oObj);
-    // }
-
 
     window.dooca.trackers.fb.addPaymentInfo = function(oObj){
         console.log('[APX-Pixel] Event - addPaymentInfo');
@@ -58,7 +52,7 @@ if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
         $.ajax({
             type: 'POST',
             url: 'https://us-central1-facebookapi-77db9.cloudfunctions.net/app',
-            data: JSON.stringify({dooca:window.dooca, agent : window.navigator.userAgent, fbp: apx.getCookie('_fbp'),fbc:apx.getCookie('_fbc'), event:currentAction, info:info}), 
+            data: JSON.stringify({dooca:window.dooca, agent : userAgent, fbp: apx.getCookie('_fbp'),fbc:apx.getCookie('_fbc'), event:currentAction, info:info}), 
             success: function(data) { console.log(data); },
             contentType: "application/json",
             dataType: 'json'
